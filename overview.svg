@@ -1,0 +1,95 @@
+<svg viewBox="0 0 1360 560" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    text { font-family: system-ui, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; }
+    .title { font-size: 30px; font-weight: 700; fill: #1a2433; }
+    .subtitle { font-size: 16px; fill: #5b6b80; }
+    .stage { font-size: 19px; font-weight: 700; }
+    .node { font-size: 15px; fill: #263449; }
+    .node-sub { font-size: 12px; fill: #6b7a90; }
+    .arrow-label { font-size: 12px; fill: #8492a6; }
+    .band { font-size: 14px; fill: #ffffff; font-weight: 600; }
+  </style>
+  <defs>
+    <marker id="arw" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#8492a6"/>
+    </marker>
+  </defs>
+
+  <rect width="1360" height="560" fill="#f7f9fc"/>
+  <text x="40" y="50" class="title">华为 3.98″ 四色墨水屏 · A0/A1 中间杠修复</text>
+  <text x="40" y="80" class="subtitle">768×552 柔性屏 + ESP32-C3 —— 从"中间一条竖缝、下半屏镜像"到连续正确画面的完整链路</text>
+
+  <!-- Stage 1 -->
+  <rect x="40" y="110" width="290" height="330" rx="12" fill="#fdeeee" stroke="#e8b4b4"/>
+  <text x="60" y="145" class="stage" fill="#b23b3b">① 现象 / 误判</text>
+  <rect x="58" y="165" width="254" height="52" rx="8" fill="#ffffff"/>
+  <text x="70" y="190" class="node">中间竖缝 · 白条</text>
+  <text x="70" y="208" class="node-sub">下半屏左右镜像</text>
+  <rect x="58" y="230" width="254" height="52" rx="8" fill="#ffffff"/>
+  <text x="70" y="255" class="node">买来时画面是完整的</text>
+  <text x="70" y="273" class="node-sub">→ 不是物理损坏</text>
+  <rect x="58" y="295" width="254" height="68" rx="8" fill="#fff6f6"/>
+  <text x="70" y="320" class="node" fill="#b23b3b">大坑:当成排线坏了</text>
+  <text x="70" y="340" class="node-sub">三条黑带"证据"其实是误判</text>
+  <text x="70" y="357" class="node-sub">契约 + 真机才是裁判</text>
+
+  <!-- Stage 2 -->
+  <rect x="360" y="110" width="290" height="330" rx="12" fill="#fff6e8" stroke="#e0c188"/>
+  <text x="380" y="145" class="stage" fill="#a8741c">② 根因</text>
+  <rect x="378" y="165" width="254" height="70" rx="8" fill="#ffffff"/>
+  <text x="390" y="190" class="node">两种批次,外观一样</text>
+  <text x="390" y="210" class="node-sub">A0:隔行映射两半屏</text>
+  <text x="390" y="228" class="node-sub">A1:顺序栅极 0..551</text>
+  <rect x="378" y="250" width="254" height="70" rx="8" fill="#fffbf4"/>
+  <text x="390" y="275" class="node" fill="#a8741c">用错固件 = 用 A0 几何</text>
+  <text x="390" y="295" class="node-sub">打 A1 屏 → 栅极被打散</text>
+  <text x="390" y="313" class="node-sub">→ 中间割裂 + 下半镜像</text>
+  <rect x="378" y="335" width="254" height="72" rx="8" fill="#ffffff"/>
+  <text x="390" y="360" class="node">A1 正解(契约)</text>
+  <text x="390" y="380" class="node-sub">768×552 顺序栅极</text>
+  <text x="390" y="398" class="node-sub">整行镜像 + 180° 预旋转</text>
+
+  <!-- Stage 3 -->
+  <rect x="680" y="110" width="290" height="330" rx="12" fill="#eaf5ee" stroke="#a7d4b6"/>
+  <text x="700" y="145" class="stage" fill="#2e7d4f">③ 解决</text>
+  <rect x="698" y="165" width="254" height="60" rx="8" fill="#ffffff"/>
+  <text x="710" y="190" class="node">刷对固件</text>
+  <text x="710" y="210" class="node-sub">MoInk R1.4.0 / 真 MF-INK V1.0.4</text>
+  <rect x="698" y="238" width="254" height="60" rx="8" fill="#ffffff"/>
+  <text x="710" y="263" class="node">设面板 = A1</text>
+  <text x="710" y="283" class="node-sub">a1_mode=1 / panel=1</text>
+  <rect x="698" y="311" width="254" height="96" rx="8" fill="#f4fbf6"/>
+  <text x="710" y="336" class="node" fill="#b23b3b">⚠ 别刷误标固件</text>
+  <text x="710" y="356" class="node-sub">热点 InkSight-XXXX 的是云固件</text>
+  <text x="710" y="376" class="node-sub">按 A0 拉帧 → 中线问题重现</text>
+  <text x="710" y="396" class="node-sub">认准 MF-INK / MoInk 热点</text>
+
+  <!-- Stage 4 -->
+  <rect x="1000" y="110" width="320" height="330" rx="12" fill="#edf1fb" stroke="#b3c1e8"/>
+  <text x="1020" y="145" class="stage" fill="#3b5bb0">④ 验证</text>
+  <rect x="1018" y="165" width="284" height="52" rx="8" fill="#ffffff"/>
+  <text x="1030" y="190" class="node">推四角方位图 TL/TR/BL/BR</text>
+  <text x="1030" y="208" class="node-sub">scripts/mfink_http_pattern.py</text>
+  <rect x="1018" y="230" width="284" height="52" rx="8" fill="#ffffff"/>
+  <text x="1030" y="255" class="node">摄像头抓帧比对</text>
+  <text x="1030" y="273" class="node-sub">四角正确 = 中线消失</text>
+  <rect x="1018" y="295" width="284" height="112" rx="8" fill="#f6f8ff"/>
+  <text x="1030" y="320" class="node" fill="#b23b3b">另一条线:刷不上屏</text>
+  <text x="1030" y="340" class="node-sub">报"刷屏失败 / last=-1"</text>
+  <text x="1030" y="360" class="node-sub">换固件没用,是硬件层:</text>
+  <text x="1030" y="380" class="node-sub">供电 → FPC 排线 → BUSY 脚</text>
+  <text x="1030" y="398" class="node-sub">两件事,别混为一谈</text>
+
+  <!-- arrows -->
+  <line x1="332" y1="275" x2="356" y2="275" stroke="#8492a6" stroke-width="2" marker-end="url(#arw)"/>
+  <line x1="652" y1="275" x2="676" y2="275" stroke="#8492a6" stroke-width="2" marker-end="url(#arw)"/>
+  <line x1="972" y1="275" x2="996" y2="275" stroke="#8492a6" stroke-width="2" marker-end="url(#arw)"/>
+  <text x="334" y="265" class="arrow-label">根因</text>
+  <text x="654" y="265" class="arrow-label">正解</text>
+  <text x="974" y="265" class="arrow-label">实证</text>
+
+  <!-- bottom boundary band -->
+  <rect x="40" y="470" width="1280" height="62" rx="10" fill="#263449"/>
+  <text x="60" y="497" class="band">边界:仅 768×552 华为四色屏 + ESP32-C3 · "局部实测"(非量产验证) · 卡图/刷屏失败属独立硬件故障,不在固件解决范围</text>
+  <text x="60" y="520" class="band" fill="#a9b8d0">核心资产:3 个固件镜像 + 7 个验证脚本 + 4 张真机证据图 + 契约文档 · 详见 docs/solution.md</text>
+</svg>
