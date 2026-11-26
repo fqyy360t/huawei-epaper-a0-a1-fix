@@ -55,6 +55,16 @@ A1 帧必须是 768×552、顺序栅极、整行镜像,打包含 180° 预旋转
 
 ## 怎么跑
 
+### 最快路径:一键刷回真 MF-INK(Windows)
+
+双击桌面的 `一键刷MF-INK.bat`(仓库根目录也有一份)。它会自动探测插着的 ESP32-C3、擦除、写入 `firmware/mfink_V1.0.4_merged.bin` 并校验。刷完连热点 `MF-INK-XXXX`,浏览器开 `192.168.4.1` 即可用网页推图,不用装配套软件。
+
+- 检测不到板子 = USB 没插好/没上电,重插等 2 秒再双击;这是脚本的保护逻辑,不是脚本坏了。
+- 想手动指定端口:命令行跑 `python scripts/flash_mfink.py --port COM29`。
+- 只看检测不刷机:`python scripts/flash_mfink.py --check`。
+
+### 手动烧录(任意平台)
+
 ```bash
 # 1. 擦除并烧录(COM16 按实际端口改)
 esptool.exe --port COM16 --baud 460800 erase_flash
@@ -66,6 +76,7 @@ python scripts/mfink_http_pattern.py --labels
 
 | 入口 | 说明 |
 |---|---|
+| [一键刷机](scripts/flash_mfink.py) | 自动探测→擦除→写入→校验,配 `一键刷MF-INK.bat` 双击入口 |
 | [固件镜像](firmware/) | MoInk R1.4.0 / 真 MF-INK V1.0.4(含误标固件反例) |
 | [验证脚本](scripts/) | 推图、轮询、抓帧、旋转矫正 |
 | [证据图](evidence/) | 四角方位图 / 竖缝证据 / 配网画面 |
@@ -100,7 +111,8 @@ huawei-epaper-a0-a1-fix/
 ├── overview.svg/png     第一屏配图(源/引用)
 ├── docs/solution.md     ★核心:根因、契约、验证、硬件排查
 ├── firmware/            3 个固件镜像(含误标反例)
-├── scripts/             推图/轮询/抓帧验证脚本
+├── scripts/             推图/轮询/抓帧验证脚本 + flash_mfink.py 一键刷机
+├── 一键刷MF-INK.bat      Windows 双击刷机入口(桌面也放了一份)
 ├── evidence/            真机验证截图
 └── flow/                项目协作控制层(目标/计划/进展/规范)
 ```
